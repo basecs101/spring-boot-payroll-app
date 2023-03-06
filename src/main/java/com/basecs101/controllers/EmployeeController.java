@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController("empCtrl")
 public class EmployeeController {
@@ -32,6 +33,13 @@ public class EmployeeController {
     List<Employee> all() {
         return repository.findAll();
     }
+
+    // Single item
+
+    @GetMapping("/employees/{id}")
+    Employee one(@PathVariable Long id) {
+        return repository.findById(id).orElseThrow(()->new EmployeeNotFoundException(id));
+    }
     // end::get-aggregate-root[]
 
     @PostMapping("/employees")
@@ -39,14 +47,7 @@ public class EmployeeController {
         return repository.save(newEmployee);
     }
 
-    // Single item
 
-    @GetMapping("/employees/{id}")
-    Employee one(@PathVariable Long id) {
-
-        return repository.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException(id));
-    }
 
     @PutMapping("/employees/{id}")
     Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
