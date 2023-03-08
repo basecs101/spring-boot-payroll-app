@@ -1,6 +1,6 @@
 # spring-boot-payroll-app
 
-CRUD = create --> (`POST`/`INSERT`), Read(`GET`/`SELECT`), Update(`PUT`/`UPDATE`), Delete(`DELETE`/`DELETE`)
+`CRUD` = Create --> (`POST`/`INSERT`), Read(`GET`/`SELECT`), Update(`PUT`/`UPDATE`), Delete(`DELETE`/`DELETE`)
 
 ### A sample spring boot rest application and demo rest methods
 
