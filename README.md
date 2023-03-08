@@ -5,13 +5,22 @@
 ---
 ### A sample spring boot rest application and demo rest methods
 
-REST (Representational State Transfer) is an architectural style used in web development for building scalable, performant, and maintainable web services. RESTful API (Application Programming Interface) is an implementation of the REST architecture.
+REST (Representational State Transfer) is an architectural style used in web development for building \
+scalable, performant, and maintainable web services. RESTful API (Application Programming Interface) \
+is an implementation of the REST architecture.
 
-RESTful API is a type of web API that is designed to work with HTTP (Hypertext Transfer Protocol) requests such as GET, POST, PUT, DELETE, etc., to retrieve, create, update or delete resources on the web. RESTful APIs use HTTP methods to define the actions to be performed on resources, and use URLs (Uniform Resource Locators) to identify resources.
+RESTful API is a type of web API that is designed to work with HTTP (Hypertext Transfer Protocol) requests \
+such as GET, POST, PUT, DELETE, etc., to retrieve, create, update or delete resources on the web. \
+RESTful APIs use HTTP methods to define the actions to be performed on resources, and use \
+URLs (Uniform Resource Locators) to identify resources.
 
-RESTful APIs typically return data in JSON (JavaScript Object Notation) or XML (Extensible Markup Language) format, which are both lightweight and easy to parse. They also use hypermedia links to navigate between resources and represent the state of the system.
+RESTful APIs typically return data in JSON (JavaScript Object Notation) or XML (Extensible Markup Language) \
+format, which are both lightweight and easy to parse. They also use hypermedia links to navigate between \
+resources and represent the state of the system.
 
-RESTful APIs are widely used in modern web development for creating web services that are easy to consume, scalable, and platform-agnostic. They are used by many popular web applications and services, such as Twitter, Facebook, and Google Maps.
+RESTful APIs are widely used in modern web development for creating web services that are easy to consume, \
+scalable, and platform-agnostic. They are used by many popular web applications and services, such as Twitter, \
+Facebook, and Google Maps.
 
 ---
 > Example of URL :- `http://localhost:8080/greeting?name=Vikram`
@@ -25,27 +34,48 @@ Details of the URL
 
 ---
 ### Spring Boot Annotations:
-1. `@Component`: The `@Component` annotation is used to mark a Java class as a Spring component, which means that it will be automatically detected by the Spring container and instantiated as a bean. For example, you can annotate a DAO class with @Component to make it available for autowiring in other Spring components.
+1. `@Component`: The `@Component` annotation is used to mark a Java class as a Spring component, which \
+    means that it will be automatically detected by the Spring container and instantiated as a bean. \
+    For example, you can annotate a DAO class with @Component to make it available for auto wiring in \
+    other Spring components.
 
-2. `@Bean`: The `@Bean` annotation is used to declare a Spring bean manually in a configuration class. It is typically used for complex beans that require some customization or initialization, and cannot be created with just the @Component annotation. For example, you can define a custom DataSource bean using the @Bean annotation.
+2. `@Bean`: The `@Bean` annotation is used to declare a Spring bean manually in a configuration class. \
+    It is typically used for complex beans that require some customization or initialization, and cannot \
+    be created with just the @Component annotation. For example, you can define a custom DataSource bean \
+    using the @Bean annotation.
 
-3. `@ComponentScan`: The `@ComponentScan` annotation is used to specify the base package(s) that Spring should scan for components. By default, Spring scans the package that contains the configuration class, but you can use @ComponentScan to specify additional packages or exclude certain packages from scanning.
+3. `@ComponentScan`: The `@ComponentScan` annotation is used to specify the base package(s) that Spring \
+    should scan for components. By default, Spring scans the package that contains the configuration class, \
+    but you can use @ComponentScan to specify additional packages or exclude certain packages from scanning.
 
-4. `@Configuration`: The `@Configuration` annotation is used to indicate that a class is a Spring configuration class, which means that it contains bean definitions and other configuration metadata. A configuration class is typically used to define beans using the @Bean annotation or to import other configuration classes.
+4. `@Configuration`: The `@Configuration` annotation is used to indicate that a class is a Spring configuration 
+    class, which means that it contains bean definitions and other configuration metadata. A configuration \
+    class is typically used to define beans using the @Bean annotation or to import other configuration classes.
 
-5. `@PostConstruct`: The `@PostConstruct` annotation is used to specify a method that should be called after the bean has been instantiated and all its dependencies have been injected. This method can be used for initialization tasks that require access to the bean's dependencies.
+5. `@PostConstruct`: The `@PostConstruct` annotation is used to specify a method that should be called after \
+    the bean has been instantiated and all its dependencies have been injected. This method can be used for \
+    initialization tasks that require access to the bean's dependencies.
 
-6. `@PreDestroy`: The `@PreDestroy` annotation is used to specify a method that should be called before the bean is destroyed. This method can be used for cleanup tasks that need to be performed when the bean is no longer needed.
+6. `@PreDestroy`: The `@PreDestroy` annotation is used to specify a method that should be called before the \
+    bean is destroyed. This method can be used for cleanup tasks that need to be performed when the bean is \
+    no longer needed.
 
 7. `SpringBootApplication` : `@SpringBootApplication` is a convenience annotation that adds all the following:
-   1. `@SpringBootConfiguration`: Tags the class as a source of bean definitions for the Application Context/ Spring IOC Container.
-   2. `@EnableAutoConfiguration`: Tells Spring Boot to start adding beans based on classpath settings, other beans, and various property settings. For example, if spring-webmvc is on the classpath, this annotation flags the application as a web application and activates key behaviors, such as setting up a DispatcherServlet.
-   3. `@ComponentScan`: Tells Spring to look for other `@Component`, `@Configuration`, `@Controller` and `@Service` in the com/basecs101 package, letting it find the classes to create beans.
+   1. `@SpringBootConfiguration`: Tags the class as a source of bean definitions for the Application Context or \
+       Spring IOC Container.
+   2. `@EnableAutoConfiguration`: Tells Spring Boot to start adding beans based on classpath settings, other beans, \
+       and various property settings. For example, if spring-webmvc is on the classpath, this annotation flags the \
+       application as a web application and activates key behaviors, such as setting up a DispatcherServlet.
+   3. `@ComponentScan`: Tells Spring to look for other `@Component`, `@Configuration`, `@Controller` and `@Service` \
+       in the com/basecs101 package, letting it find the classes to create beans.
+
 8. `@SpringBootTest` : Marks the class as Spring boot test class
+
 9. `@RestController` : The `@RestController` annotation is a specialization of the `@Controller` annotation in Spring Boot that is used to indicate that the annotated class is a REST controller. \
 When a class is annotated with `@RestController`, Spring Boot automatically maps the methods in the class to specific HTTP requests based on the method annotations such as `@GetMapping`, `@PostMapping`, `@PutMapping`, `@PatchMapping`, `@DeleteMapping`, etc. The methods return the response as JSON or XML data, depending on the content type of the request. \
 The `@RestController` annotation combines the `@Controller` and `@ResponseBody` annotations, which means that all methods in the controller class will return the response as the body of the HTTP response, rather than returning a view name that would be resolved by a view resolver. \
 This annotation is commonly used in Spring Boot applications that serve as RESTful web services, where the application provides a set of HTTP endpoints to expose functionality to client applications or other services.
+
 10. `@RequestMapping`: This annotation is used to map a method to a specific URI and HTTP request method. It is a versatile annotation that can be used to handle all HTTP methods, including GET, POST, PUT, DELETE, and more. Example:
     ```Java
     @RequestMapping(value = "/users", method = RequestMethod.GET)
