@@ -19,6 +19,7 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 @Entity
+//Model or POJO or bean or Object or Instance or Table or Schema
 public class Employee {
 
     private @Id
@@ -27,7 +28,6 @@ public class Employee {
     private String role;
 
     public Employee(String name, String role) {
-
         this.name = name;
         this.role = role;
     }

@@ -2,6 +2,7 @@ package com.basecs101;
 
 import com.basecs101.configs.LoadDatabase;
 import com.basecs101.controllers.EmployeeController;
+import com.basecs101.customexception.EmployeeNotFoundAdvice;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -27,10 +28,11 @@ public class PayrollApplication {
 
 	}
 
-//	@PostConstruct
-//	void afterInit(){
-//		ApplicationContext applicationContext = new AnnotationConfigApplicationContext(LoadDatabase.class);
-//		System.out.println("Test whether bean is created : " + applicationContext.getBean(CommandLineRunner.class));
-//	}
-
+	@PostConstruct
+	void afterInit(){
+		log.info("Inside post construct");
+		AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(EmployeeNotFoundAdvice.class);
+		applicationContext.scan("com.basecs101");
+		log.info("Test whether EmployeeNotFoundAdvice bean is created : " + applicationContext.getBean(EmployeeNotFoundAdvice.class));
+	}
 }

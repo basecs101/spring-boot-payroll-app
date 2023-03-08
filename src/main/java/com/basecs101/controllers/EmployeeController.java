@@ -3,6 +3,7 @@ package com.basecs101.controllers;
 import com.basecs101.customexception.EmployeeNotFoundException;
 import com.basecs101.model.Employee;
 import com.basecs101.repository.EmployeeRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RestController("empCtrl")
 public class EmployeeController {
 
     private final EmployeeRepository repository;
 
     EmployeeController(EmployeeRepository repository) {
-        System.out.println("repository : "+repository.toString());
+        log.info("EmployeeRepository bean : " + repository.toString());
         this.repository = repository;
-        System.out.println("Controller called");
     }
 
 
