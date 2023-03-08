@@ -25,26 +25,127 @@ Details of the URL
 
 ---
 ### Spring Boot Annotations:
-1. `SpringBootApplication` : `@SpringBootApplication` is a convenience annotation that adds all the following:
+1. `@Component`: The `@Component` annotation is used to mark a Java class as a Spring component, which means that it will be automatically detected by the Spring container and instantiated as a bean. For example, you can annotate a DAO class with @Component to make it available for autowiring in other Spring components.
+
+2. `@Bean`: The `@Bean` annotation is used to declare a Spring bean manually in a configuration class. It is typically used for complex beans that require some customization or initialization, and cannot be created with just the @Component annotation. For example, you can define a custom DataSource bean using the @Bean annotation.
+
+3. `@ComponentScan`: The `@ComponentScan` annotation is used to specify the base package(s) that Spring should scan for components. By default, Spring scans the package that contains the configuration class, but you can use @ComponentScan to specify additional packages or exclude certain packages from scanning.
+
+4. `@Configuration`: The `@Configuration` annotation is used to indicate that a class is a Spring configuration class, which means that it contains bean definitions and other configuration metadata. A configuration class is typically used to define beans using the @Bean annotation or to import other configuration classes.
+
+5. `@PostConstruct`: The `@PostConstruct` annotation is used to specify a method that should be called after the bean has been instantiated and all its dependencies have been injected. This method can be used for initialization tasks that require access to the bean's dependencies.
+
+6. `@PreDestroy`: The `@PreDestroy` annotation is used to specify a method that should be called before the bean is destroyed. This method can be used for cleanup tasks that need to be performed when the bean is no longer needed.
+
+7. `SpringBootApplication` : `@SpringBootApplication` is a convenience annotation that adds all the following:
    1. `@SpringBootConfiguration`: Tags the class as a source of bean definitions for the Application Context/ Spring IOC Container.
    2. `@EnableAutoConfiguration`: Tells Spring Boot to start adding beans based on classpath settings, other beans, and various property settings. For example, if spring-webmvc is on the classpath, this annotation flags the application as a web application and activates key behaviors, such as setting up a DispatcherServlet.
    3. `@ComponentScan`: Tells Spring to look for other `@Component`, `@Configuration`, `@Controller` and `@Service` in the com/basecs101 package, letting it find the classes to create beans.
-2. `@SpringBootTest` : Marks the class as Spring boot test class
-3. `@RestController` : The Spring boot `@RestController` annotation, which marks the class
-   as a controller where every method returns a domain object instead of a view.
-   It is shorthand for including both `@Controller` and `@ResponseBody`.
-4. `@GetMapping` : The @GetMapping annotation ensures that HTTP GET requests to /greeting are mapped to the greeting() method.
-5. `@PostMapping` : Create resource
-6. `@PutMapping` : Update resource
-7. `@PatchMapping` : Partial update of resource
-8. `@DeleteMapping` : Delete existing resource
-9. `@RequestParam` : @RequestParam binds the value of the query string parameter name into the name parameter of the greeting() method. If the name parameter is absent in the request, the defaultValue of World is used.
-10. `@PathVariable`:
-11. `@RequestBody` :
-12. `@ResponseBody`: This annotation signals that this advice(`ControllerAdvice`) is rendered straight into the response body.
-13. `@ControllerAdvice`: The body of the advice generates the content. In this case, it gives the message of the exception.
-14. `@ExceptionHandler(EmployeeNotFoundException.class)`: configures the advice to only respond if an EmployeeNotFoundException is thrown.
-15. `@ResponseStatus(HttpStatus.NOT_FOUND)`: This annotation sets the Http Status code for the exception.
+8. `@SpringBootTest` : Marks the class as Spring boot test class
+9. `@RestController` : The `@RestController` annotation is a specialization of the `@Controller` annotation in Spring Boot that is used to indicate that the annotated class is a REST controller. \
+When a class is annotated with `@RestController`, Spring Boot automatically maps the methods in the class to specific HTTP requests based on the method annotations such as `@GetMapping`, `@PostMapping`, `@PutMapping`, `@PatchMapping`, `@DeleteMapping`, etc. The methods return the response as JSON or XML data, depending on the content type of the request. \
+The `@RestController` annotation combines the `@Controller` and `@ResponseBody` annotations, which means that all methods in the controller class will return the response as the body of the HTTP response, rather than returning a view name that would be resolved by a view resolver. \
+This annotation is commonly used in Spring Boot applications that serve as RESTful web services, where the application provides a set of HTTP endpoints to expose functionality to client applications or other services.
+10. `@RequestMapping`: This annotation is used to map a method to a specific URI and HTTP request method. It is a versatile annotation that can be used to handle all HTTP methods, including GET, POST, PUT, DELETE, and more. Example:
+    ```Java
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public List<User> getAllUsers() {
+    // method logic
+    }
+   
+11. `@GetMapping`: This annotation is a shortcut for @RequestMapping with method GET. It is used to map a method to a specific URI using HTTP GET method. Example:
+   
+    ```Java
+    @GetMapping("/users/{id}")
+    public User getUserById(@PathVariable Long id) {
+    // method logic
+    }
+   
+12. `@PostMapping`: This annotation is used to map a method to a specific URI using HTTP POST method. Example:
+
+    ```Java
+    @PostMapping("/users")
+    public User createUser(@RequestBody User user) {
+    // method logic
+    }
+   
+13. `@PutMapping`: This annotation is used to map a method to a specific URI using HTTP PUT method. Example:
+
+    ```Java
+    @PutMapping("/users/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+    // method logic
+    }
+   
+14. `@PatchMapping`: This annotation is used to map a method to a specific URI using HTTP PATCH method. Example:
+
+    ```Java
+    @PatchMapping("/users/{id}")
+    public User updateUserPartial(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+    // method logic
+    }
+   
+15. `@DeleteMapping`: This annotation is used to map a method to a specific URI using HTTP DELETE method. Example:
+
+    ```Java
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable Long id) {
+    // method logic
+    }
+   
+16. `@RequestParam`: This annotation is used to map a request parameter to a method parameter. It is used to extract a specific parameter value from the request URL. Example:
+   
+   ```Java   
+   @GetMapping("/users")
+   public List<User> getUsersByPage(@RequestParam int page) {
+   // method logic
+   }
+   
+17. `@PathVariable`: This annotation is used to extract a URI variable and map it to a method parameter. Example:
+   
+   ```Java
+   @GetMapping("/users/{id}")
+   public User getUserById(@PathVariable Long id) {
+   // method logic
+   }
+   
+18. `@RequestBody`: This annotation is used to map the request body to a method parameter. It is used to extract the request payload and convert it into an object. Example:
+
+   ```Java
+   @PostMapping("/users")
+   public User createUser(@RequestBody User user) {
+   // method logic
+   }
+   
+19. `@ResponseBody`: This annotation is used to indicate that the method return value should be used as the response body. It is used to convert the response object into JSON or XML format. Example:
+
+   ```Java
+   @GetMapping("/users")
+   @ResponseBody
+   public List<User> getAllUsers() {
+   // method logic
+   }
+   
+20. `@ControllerAdvice`: This annotation is used to define global exception handling for controllers. It is used to handle exceptions across all controller methods. Example:
+
+   ```Java   
+   @ControllerAdvice
+   public class GlobalExceptionHandler {
+   @ExceptionHandler(EmployeeNotFoundException.class)
+   public ResponseEntity<String> handleEmployeeNotFoundException(EmployeeNotFoundException ex) {
+   // method logic
+   }
+   }
+   
+21. `@ExceptionHandler(EmployeeNotFoundException.class)`: This annotation is used to define an exception handling method for a specific exception. It is used to handle a specific exception thrown by a controller method. Example:
+
+   ```Java
+   @GetMapping("/employees/{id}")
+   public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+      Employee employee = employeeService.getEmployeeById(id);
+      if (employee == null) {
+         throw new EmployeeNotFoundException("Employee")
+   }
 
 > The main() method uses Spring Boot’s SpringApplication.run() method to launch an application. Did you notice that there was not a single line of XML? There is no web.xml file, either. This web application is 100% pure Java and you did not have to deal with configuring any plumbing or infrastructure.
 
@@ -66,7 +167,9 @@ Details of the URL
 3. `@GeneratedValue` -> Automatic generation field and increment
 
 ---
+
 ### HTTP Status Codes:
+
 ---
 
 #### 2xx
