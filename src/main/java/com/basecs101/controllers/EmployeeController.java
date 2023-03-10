@@ -4,11 +4,15 @@ import com.basecs101.customexception.EmployeeNotFoundException;
 import com.basecs101.model.Employee;
 import com.basecs101.repository.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Slf4j
 @RestController("empCtrl")
@@ -31,11 +35,15 @@ public class EmployeeController {
 
     // Single item
 
-//    @GetMapping("/employees/{id}")
-    @RequestMapping(method = {RequestMethod.GET}, path = "/employees/{id}")
+//    @RequestMapping(method = {RequestMethod.GET}, path = "/employees/{id}")
+    @GetMapping("/employees/{id}")
 
-    Employee one(@PathVariable(name = "id", required = true) Long id) {
-        return repository.findById(id).orElseThrow(()->new EmployeeNotFoundException(id));
+    EntityModel<Employee> one(@PathVariable(name = "id", required = true) Long id) {
+        Employee employee = repository.findById(id).orElseThrow(()->new EmployeeNotFoundException(id));
+
+        return EntityModel.of(employee, //
+                linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel(),
+                linkTo(methodOn(EmployeeController.class).all()).withRel("all_employees"));
     }
     // end::get-aggregate-root[]
 
