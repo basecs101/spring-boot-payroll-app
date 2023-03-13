@@ -2,14 +2,14 @@ package com.basecs101.controllers;
 
 import com.basecs101.customexception.EmployeeNotFoundException;
 import com.basecs101.model.Employee;
+import com.basecs101.model.EmployeeModelAssembler;
 import com.basecs101.repository.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -20,7 +20,10 @@ public class EmployeeController {
 
     private final EmployeeRepository repository;
 
-    EmployeeController(EmployeeRepository repository) {
+    private final EmployeeModelAssembler employeeModelAssembler;
+
+    EmployeeController(EmployeeRepository repository, EmployeeModelAssembler employeeModelAssembler) {
+        this.employeeModelAssembler = employeeModelAssembler;
         log.info("EmployeeRepository bean : " + repository.toString());
         this.repository = repository;
     }
@@ -28,9 +31,16 @@ public class EmployeeController {
 
     // Aggregate root
     // tag::get-aggregate-root[]
+
     @GetMapping("/employees")
-    List<Employee> all() {
-        return repository.findAll();
+    public CollectionModel<EntityModel<Employee>> all() {
+
+        List<EntityModel<Employee>> employees = (List<EntityModel<Employee>>) repository.findAll()
+                .stream()
+                .map(employeeModelAssembler::toModel)
+                .toList();
+
+        return CollectionModel.of(employees, linkTo(methodOn(EmployeeController.class).all()).withSelfRel());
     }
 
     // Single item
@@ -38,12 +48,10 @@ public class EmployeeController {
 //    @RequestMapping(method = {RequestMethod.GET}, path = "/employees/{id}")
     @GetMapping("/employees/{id}")
 
-    EntityModel<Employee> one(@PathVariable(name = "id", required = true) Long id) {
+    public EntityModel<Employee> one(@PathVariable(name = "id", required = true) Long id) {
         Employee employee = repository.findById(id).orElseThrow(()->new EmployeeNotFoundException(id));
 
-        return EntityModel.of(employee, //
-                linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel(),
-                linkTo(methodOn(EmployeeController.class).all()).withRel("all_employees"));
+        return employeeModelAssembler.toModel(employee);
     }
     // end::get-aggregate-root[]
 
@@ -51,6 +59,7 @@ public class EmployeeController {
     Employee newEmployee(@RequestBody Employee newEmployee) {
         return repository.save(newEmployee);
     }
+
 
 
 

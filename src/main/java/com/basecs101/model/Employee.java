@@ -22,13 +22,27 @@ import lombok.*;
 //Model or POJO or bean or Object or Instance or Table or Schema
 public class Employee {
 
-    private @Id
-    @GeneratedValue Long id;
-    private String name;
+    private @Id @GeneratedValue Long id;
     private String role;
+    private String firstName;
+    private String lastName;
 
-    public Employee(String name, String role) {
-        this.name = name;
+    public Employee(String role, String firstName, String lastName) {
         this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public String getName(){
+        return firstName + " " + lastName;
+    }
+
+    //name = "Vikram Gupta"
+    public void setName(String name){
+
+        String[] fistNameAndLastName = name.split(" ");
+
+        this.firstName = fistNameAndLastName[0];
+        this.lastName = fistNameAndLastName[1];
     }
 }
