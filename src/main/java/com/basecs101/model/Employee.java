@@ -24,6 +24,7 @@ public class Employee {
 
     private @Id @GeneratedValue Long id;
     private String role;
+    private String name;
     private String firstName;
     private String lastName;
 
