@@ -231,3 +231,5 @@ Some sites incorrectly issue HTTP 401 when an IP address is banned from the webs
 
 
 ### Reference for this [tutorial](https://spring.io/guides/tutorials/rest/)
+
+Postman workspace team and API collections - https://app.getpostman.com/join-team?invite_code=f7bb679acce61a0d1bf234b9e8627d35&target_code=6d7722de9d560165892c83bb1f38f953
