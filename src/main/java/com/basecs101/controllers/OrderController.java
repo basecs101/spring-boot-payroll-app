@@ -24,19 +24,19 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class OrderController {
 
     private final OrderRepository orderRepository;
-    private final OrderModelAssembler assembler;
+    private final OrderModelAssembler orderModelAssembler;
 
-    OrderController(OrderRepository orderRepository, OrderModelAssembler assembler) {
+    OrderController(OrderRepository orderRepository, OrderModelAssembler orderModelAssembler) {
 
         this.orderRepository = orderRepository;
-        this.assembler = assembler;
+        this.orderModelAssembler = orderModelAssembler;
     }
 
     @GetMapping("/orders")
     public CollectionModel<EntityModel<Order>> all() {
 
         List<EntityModel<Order>> orders = orderRepository.findAll().stream() //
-                .map(assembler::toModel) //
+                .map(orderModelAssembler::toModel) //
                 .collect(Collectors.toList());
 
         return CollectionModel.of(orders, //
@@ -49,7 +49,7 @@ public class OrderController {
         Order order = orderRepository.findById(id) //
                 .orElseThrow(() -> new OrderNotFoundException(id));
 
-        return assembler.toModel(order);
+        return orderModelAssembler.toModel(order);
     }
 
     @PostMapping("/orders")
@@ -60,7 +60,7 @@ public class OrderController {
 
         return ResponseEntity //
                 .created(linkTo(methodOn(OrderController.class).one(newOrder.getId())).toUri()) //
-                .body(assembler.toModel(newOrder));
+                .body(orderModelAssembler.toModel(newOrder));
     }
 
     @DeleteMapping("/orders/{id}/cancel")
@@ -71,7 +71,7 @@ public class OrderController {
 
         if (order.getStatus() == Status.IN_PROGRESS) {
             order.setStatus(Status.CANCELLED);
-            return ResponseEntity.ok(assembler.toModel(orderRepository.save(order)));
+            return ResponseEntity.ok(orderModelAssembler.toModel(orderRepository.save(order)));
         }
 
         return ResponseEntity //
@@ -90,7 +90,7 @@ public class OrderController {
 
         if (order.getStatus() == Status.IN_PROGRESS) {
             order.setStatus(Status.COMPLETED);
-            return ResponseEntity.ok(assembler.toModel(orderRepository.save(order)));
+            return ResponseEntity.ok(orderModelAssembler.toModel(orderRepository.save(order)));
         }
 
         return ResponseEntity //
@@ -99,5 +99,13 @@ public class OrderController {
                 .body(Problem.create() //
                         .withTitle("Method not allowed") //
                         .withDetail("You can't complete an order that is in the " + order.getStatus() + " status"));
+    }
+
+    @DeleteMapping("/orders/{id}")
+    ResponseEntity<?> deleteOrder(@PathVariable Long id) {
+
+        orderRepository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
