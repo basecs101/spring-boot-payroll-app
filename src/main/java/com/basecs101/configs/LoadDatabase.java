@@ -8,6 +8,7 @@ import com.basecs101.repository.OrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,15 +26,14 @@ public class LoadDatabase {
             @Override
             public void run(String... args) throws Exception {
 
-                Employee employee = new Employee("SE","Vikram","Gupta");
-                log.info("Preloading " + repository.save(employee));
+                log.info("Preloading " + repository.save(new Employee("SE","Vikram","Gupta")));
                 log.info("Preloading " + repository.save(new Employee("ST","Vivek","Gupta")));
 
                 orderRepository.save(new Order("MacBook Pro", Status.COMPLETED));
                 orderRepository.save(new Order("iPhone", Status.IN_PROGRESS));
 
                 orderRepository.findAll().forEach(order -> {
-                    log.info("Preloaded " + order);
+                    log.debug("Preloaded " + order);
                 });
             }
         };

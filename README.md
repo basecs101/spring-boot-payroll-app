@@ -176,7 +176,9 @@ This annotation is commonly used in Spring Boot applications that serve as RESTf
       if (employee == null) {
          throw new EmployeeNotFoundException("Employee")
    }
-
+   
+22. `@Value` : This annotation is used for reading value of the variable of application.yml into classes as field names.
+23. `@Profile` : This is used to set a profile. eg. local, dev , stg, prod etc.
 > The main() method uses Spring Boot’s SpringApplication.run() method to launch an application. Did you notice that there was not a single line of XML? There is no web.xml file, either. This web application is 100% pure Java and you did not have to deal with configuring any plumbing or infrastructure.
 
 ---
@@ -228,6 +230,23 @@ Some sites incorrectly issue HTTP 401 when an IP address is banned from the webs
 3. `502` Bad Gateway - The server was acting as a gateway or proxy and received an invalid response from the upstream server.
 4. `503` Service Unavailable - The server cannot handle the request (because it is overloaded or down for maintenance). Generally, this is a temporary state.[30]
 5. `504` Gateway Timeout - The server was acting as a gateway or proxy and did not receive a timely response from the upstream server.
+
+
+Logging and log levels:
+set the logging parameter in application.yml
+`logging:
+    level:
+        root: info`
+
+Log levels and their order in descending order.
+
+1. `fatal`
+2. `error`
+3. `warn`
+4. `info`
+5. `debug`
+6. `trace`
+
 
 
 ### Reference for this [tutorial](https://spring.io/guides/tutorials/rest/)
