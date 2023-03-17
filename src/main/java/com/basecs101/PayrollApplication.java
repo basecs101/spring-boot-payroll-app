@@ -16,11 +16,8 @@ import org.springframework.context.annotation.Profile;
 @SpringBootApplication
 public class PayrollApplication {
 
-	@Value("${firstName}")
-	String firstName;
-
-	@Value("${lastName}")
-	String lastName;
+	@Value("${authorName}")
+	String authorName;
 
 	public static void main(String[] args) {
 
@@ -32,7 +29,7 @@ public class PayrollApplication {
 	@PostConstruct
 	void afterInit(){
 		log.info("Inside post construct ");
-		log.info("FirstName : "+firstName + " LastName : "+lastName);
+		log.info("Author Name : "+ authorName);
 		AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(EmployeeNotFoundAdvice.class);
 		applicationContext.scan("com.basecs101");
 		log.info("Test whether EmployeeNotFoundAdvice bean is created : " + applicationContext.getBean(EmployeeNotFoundAdvice.class));

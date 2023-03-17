@@ -6,5 +6,4 @@ logging:
   level:
     root: info
 
-firstName: Vikram
-lastName: Gupta
+authorName: Vikram Gupta
