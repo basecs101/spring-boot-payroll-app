@@ -22,6 +22,9 @@ RESTful APIs are widely used in modern web development for creating web services
 scalable, and platform-agnostic. They are used by many popular web applications and services, such as Twitter, \
 Facebook, and Google Maps.
 
+This application also contains spring boot starter actuator dependency for health checks like liveness and readiness.
+
+
 ---
 > Example of URL :- `http://localhost:8080/greeting?name=Vikram`
 Details of the URL
