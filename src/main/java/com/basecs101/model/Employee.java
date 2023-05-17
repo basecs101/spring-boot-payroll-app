@@ -3,6 +3,7 @@ package com.basecs101.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 
 /**
@@ -19,6 +20,7 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 @Entity
+@Table(name = "Employee")
 //Model or POJO or bean or Object or Instance or Table or Schema
 public class Employee {
 
